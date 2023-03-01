@@ -28,8 +28,10 @@ function App() {
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold mb-4">Grocery List</h1>
       <div className="App">
-        <List items={items} toggle={toggle} />
-        <Add addToItems={addToItems} />
+        <div><List items={items} toggle={toggle} /></div>
+        <div className="pt-10">
+          <Add addToItems={addToItems} />
+        </div>
       </div>
     </div>
   )
