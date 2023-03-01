@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import './App.css';
 import Add from './components/Add';
 import List from './components/List';
 import { items as groceryList } from './data';
@@ -12,14 +11,28 @@ function App() {
     setItems([...items, item])
   }
 
+  const toggle = (name: string) => {
+    const newItems = items.map(item => {
+      if (item.name === name) {
+        return {
+          ...item,
+          done: !item.done
+        }
+      }
+      return item;
+    })
+    setItems(newItems);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <List items={items} />
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-2xl font-bold mb-4">Grocery List</h1>
+      <div className="App">
+        <List items={items} toggle={toggle} />
         <Add addToItems={addToItems} />
-      </header>
+      </div>
     </div>
-  );
+  )
 }
 
 export default App;

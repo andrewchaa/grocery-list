@@ -2,25 +2,34 @@ import { GroceryItem } from "../types";
 
 export default function List({
   items,
+  toggle
 }: {
-  items: GroceryItem[]
+  items: GroceryItem[],
+  toggle: (name: string) => void
 }): JSX.Element {
 
-  const toggleDone = (name: string) => {
-    console.log('toggleDone', name);
-  }
-
   return (
-    <ul>
-      {items.map((item) => (
-        <li
-          key={item.name}
-          onClick={() => toggleDone(item.name)}
-          style={{ textDecoration: item.done ? 'line-through' : 'none' }}
-        >
-          {item.name}
-        </li>
+    <fieldset className="space-y-5">
+      {items.map((item, itemIdx) => (
+        <div className="relative flex items-start">
+          <div className="flex h-5 items-center">
+            <input
+              id={item.name}
+              aria-describedby="comments-description"
+              name={item.name}
+              type="checkbox"
+              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              checked={item.done}
+              onChange={() => toggle(item.name)}
+            />
+          </div>
+          <div className="ml-3 text-sm">
+            <label htmlFor={item.name} className="font-medium text-gray-700">
+              {item.name}
+            </label>
+          </div>
+        </div>
       ))}
-    </ul>
-  );
+    </fieldset>
+  )
 }
