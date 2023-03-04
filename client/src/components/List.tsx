@@ -8,6 +8,14 @@ export default function List({
   toggle: (name: string) => void
 }): JSX.Element {
 
+  const itemClassNames = (item: GroceryItem) => {
+    const classNames = ['block', 'text-sm', 'font-medium']
+    if (item.done) {
+      classNames.push('line-through')
+    }
+    return classNames.join(' ')
+  }
+
   return (
     <fieldset className="space-y-5">
       {items.map((item, itemIdx) => (
@@ -25,7 +33,7 @@ export default function List({
           </div>
           <div className="ml-3 text-sm">
             <label htmlFor={`check-${item.name}`}
-              className="font-medium text-gray-700">
+              className={itemClassNames(item)}>
               {item.name}
             </label>
           </div>
