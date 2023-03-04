@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { render, screen } from "@testing-library/react"
-import Add from '../src/components/Add'
+import Add from '../components/Add'
 import userEvent from '@testing-library/user-event'
 
 describe('Add', () => {

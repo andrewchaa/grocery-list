@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { render, screen } from '@testing-library/react'
-import List from '../src/components/List'
+import List from '../components/List'
 
 describe('List', () => {
   const milk = 'Milk'
@@ -22,6 +22,11 @@ describe('List', () => {
     expect(screen.getByText(eggs)).toHaveClass('line-through')
   })
 
-  // it('calls toggle when an item is clicked', () => {
-  // })
+  it('calls toggle when an item is clicked', () => {
+    render(<List items={items} toggle={toggle} />)
+
+    screen.getByRole('checkbox', { name: milk }).click()
+
+    expect(toggle).toHaveBeenCalledWith(milk)
+  })
 })
