@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { render, screen } from "@testing-library/react"
 import Add from '../components/Add'
 import userEvent from '@testing-library/user-event'
@@ -22,6 +21,16 @@ describe('Add', () => {
     await user.click(screen.getByRole('button'))
 
     expect(addToItems).toHaveBeenCalledWith({ name: item, done: false })
+  })
+
+  it('clears the input when the button is clicked', async () => {
+    render(<Add addToItems={addToItems} />)
+
+    const input = screen.getByRole('textbox')
+    await user.type(input, item)
+    await user.click(screen.getByRole('button'))
+
+    expect(input).toHaveValue('')
   })
 
   it('does not call addToItems when the button is clicked but the item is empty', async () => {

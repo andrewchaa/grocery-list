@@ -21,6 +21,7 @@ export default function Add({
     }
 
     addToItems(item)
+    setItem({ name: '', done: false })
   }
 
   const textBoxclassNames = errorMessage
@@ -44,6 +45,7 @@ export default function Add({
           aria-invalid="true"
           aria-describedby="email-error"
           onFocus={() => setErrorMessage('')}
+          value={item.name}
           onChange={(e) => {
             setItem({ ...item, name: e.target.value })
           }}
