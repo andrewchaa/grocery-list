@@ -11,10 +11,10 @@ export default function List({
   return (
     <fieldset className="space-y-5">
       {items.map((item, itemIdx) => (
-        <div className="relative flex items-start">
+        <div key={item.name} className="relative flex items-start">
           <div className="flex h-5 items-center">
             <input
-              id={item.name}
+              id={`check-${item.name}`}
               aria-describedby="comments-description"
               name={item.name}
               type="checkbox"
@@ -24,7 +24,8 @@ export default function List({
             />
           </div>
           <div className="ml-3 text-sm">
-            <label htmlFor={item.name} className="font-medium text-gray-700">
+            <label htmlFor={`check-${item.name}`}
+              className="font-medium text-gray-700">
               {item.name}
             </label>
           </div>

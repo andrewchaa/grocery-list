@@ -10,7 +10,6 @@ export default function Add({
   const [item, setItem] = useState<GroceryItem>({
     name: '',
     done: false,
-    quantity: 1
   });
 
   const handleAdd = () => {
