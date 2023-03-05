@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "rootDirs": ["src"],
+    "outDir": "dist",
+    "lib": ["es2020"],
+    "target": "es2020",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "types": ["node"],
+    "resolveJsonModule": true,                        /* Enable importing .json files */
+    "isolatedModules": true,                       /* Ensure that each file can be safely transpiled without relying on other imports. */
+
+  }
+}
