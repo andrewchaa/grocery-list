@@ -7,5 +7,9 @@ const typeDefs = `#graphql
   type Query {
     groceryItems: [GroceryItem]
   }
+
+  type Mutation {
+    addGroceryItem(name: String!): GroceryItem
+  }
 `;
 export default typeDefs;

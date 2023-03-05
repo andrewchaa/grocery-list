@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { useQuery, gql } from '@apollo/client'
+import { useQuery, useMutation, gql } from '@apollo/client'
 import Add from './components/Add';
 import List from './components/List';
 import { items as groceryList } from './data';
 import { GroceryItem } from './types';
+import { GET_GROCERYITEMS } from './gqls';
 
 function App() {
   const [items, setItems] = useState<GroceryItem[]>(groceryList);
@@ -11,14 +12,15 @@ function App() {
     setItems([...items, item])
   }
 
-  const GET_GROCERYITEMS = gql`
-    query GetItems {
-      groceryItems {
+  const ADD_GROCERYITEM = gql`
+    mutation AddItem($name: String!) {
+      addGroceryItem(name: $name) {
         name
-        done
       }
     }
   `
+
+
   const toggle = (name: string) => {
     const newItems = items.map(item => {
       if (item.name === name) {
@@ -35,8 +37,6 @@ function App() {
   const { loading, error, data } = useQuery(GET_GROCERYITEMS)
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error :{error.message}</p>
-
-  console.log(data)
 
   return (
     <div className="container mx-auto px-4 py-8">

@@ -1,28 +1,26 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
+import { useMutation } from "@apollo/client"
 import { GroceryItem } from "../types"
 import { ExclamationCircleIcon } from '@heroicons/react/20/solid'
+import { ADD, GET_GROCERYITEMS } from "../gqls"
 
 export default function Add({
   addToItems
 }: {
   addToItems: (item: GroceryItem) => void
 }): JSX.Element {
+
   const [item, setItem] = useState<GroceryItem>({ name: '', done: false })
   const [errorMessage, setErrorMessage] = useState<string>('')
+  const [addGroceryItem, { data, loading, error }] = useMutation(
+    ADD, {
+    refetchQueries: [
+      { query: GET_GROCERYITEMS },
+    ]
+  })
 
-  useEffect(() => {
-    setErrorMessage('')
-  }, [item])
-
-  const handleAdd = () => {
-    if (item.name === '') {
-      setErrorMessage('The item cannot be empty.')
-      return
-    }
-
-    addToItems(item)
-    setItem({ name: '', done: false })
-  }
+  if (loading) return <p>Submitting...</p>
+  if (error) return <p>Submission error :{error.message}</p>
 
   const textBoxclassNames = errorMessage
     ? 'border-red-300 pr-10 text-red-900 placeholder-red-300 focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm'
@@ -65,7 +63,11 @@ export default function Add({
 
       <div className="mt-5">
         <button
-          onClick={handleAdd}
+          onClick={e => {
+            e.preventDefault()
+            addGroceryItem({ variables: { name: item.name } })
+            setItem({ name: '', done: false })
+          }}
           type="button"
           className="inline-flex items-center rounded border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
         >
