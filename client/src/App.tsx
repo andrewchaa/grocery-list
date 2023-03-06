@@ -2,26 +2,9 @@ import { useState } from 'react';
 import { useQuery } from '@apollo/client'
 import Add from './components/Add';
 import List from './components/List';
-import { items as groceryList } from './data';
-import { GroceryItem } from './types';
 import { GET } from './gqls';
 
 function App() {
-  const [items, setItems] = useState<GroceryItem[]>(groceryList);
-
-  const toggle = (name: string) => {
-    const newItems = items.map(item => {
-      if (item.name === name) {
-        return {
-          ...item,
-          done: !item.done
-        }
-      }
-      return item;
-    })
-    setItems(newItems);
-  }
-
   const { loading, error, data } = useQuery(GET)
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error :{error.message}</p>

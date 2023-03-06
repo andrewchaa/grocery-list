@@ -8,7 +8,7 @@ export default function Add(): JSX.Element {
 
   const [item, setItem] = useState<GroceryItem>({ name: '', done: false })
   const [errorMessage, setErrorMessage] = useState<string>('')
-  const [addGroceryItem, { loading, error }] = useMutation(
+  const [addGroceryItem, { data, loading, error }] = useMutation(
     ADD, {
     refetchQueries: [
       { query: GET },
@@ -26,8 +26,13 @@ export default function Add(): JSX.Element {
 
   return (
     <div>
-      <form onSubmit={e => {
+      <form name="Add" onSubmit={e => {
         e.preventDefault()
+        if (!item.name) {
+          setErrorMessage('Item name is required')
+          return
+        }
+
         addGroceryItem({ variables: { name: item.name } })
         setItem({ name: '', done: false })
       }}>

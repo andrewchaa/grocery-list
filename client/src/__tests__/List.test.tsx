@@ -1,5 +1,7 @@
-import { render, screen } from '@testing-library/react'
+import { MockedProvider } from '@apollo/client/testing'
+import { render, screen, waitFor } from '@testing-library/react'
 import List from '../components/List'
+import { GET, UPDATE } from '../gqls'
 
 describe('List', () => {
   const milk = 'Milk'
@@ -8,10 +10,21 @@ describe('List', () => {
     { name: milk, done: false },
     { name: eggs, done: true },
   ]
-  const toggle = jest.fn()
 
   it('renders a list of items', () => {
-    render(<List items={items} toggle={toggle} />)
+    const mocks = [
+      {
+        request: {
+          query: GET,
+        },
+        result: { data: items },
+      }
+    ]
+    render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <List items={items} />
+      </MockedProvider>
+    )
 
     expect(screen.getByText(milk)).toBeInTheDocument()
     expect(screen.getByRole('checkbox', { name: milk })).not.toBeChecked()
@@ -21,11 +34,36 @@ describe('List', () => {
     expect(screen.getByText(eggs)).toHaveClass('line-through')
   })
 
-  it('calls toggle when an item is clicked', () => {
-    render(<List items={items} toggle={toggle} />)
+  it('calls toggle when an item is clicked', async () => {
+    const newDataMock = jest.fn()
+    newDataMock.mockReturnValue({
+      "updateGroceryItem": {
+        "name": "Milk",
+        "done": true
+      }
+    })
+
+    const mocks = [{
+      request: {
+        query: GET,
+      },
+      result: { data: items },
+    }, {
+      request: {
+        query: UPDATE,
+        variables: { name: milk, done: true },
+      },
+      newData: newDataMock,
+    }]
+
+    render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <List items={items} />
+      </MockedProvider>
+    )
 
     screen.getByRole('checkbox', { name: milk }).click()
 
-    expect(toggle).toHaveBeenCalledWith(milk)
+    expect(newDataMock).toHaveBeenCalledWith()
   })
 })
