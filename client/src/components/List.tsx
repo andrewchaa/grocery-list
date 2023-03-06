@@ -3,6 +3,12 @@ import { GET, UPDATE } from "../gqls";
 import { GroceryItem } from "../types";
 
 export default function List({ items }: { items: GroceryItem[] }): JSX.Element {
+  const [updateGroceryItem] = useMutation(UPDATE, {
+    refetchQueries: [
+      { query: GET },
+    ]
+  })
+
   const itemClassNames = (item: GroceryItem) => {
     const classNames = ['block', 'text-sm', 'font-medium']
     if (item.done) {
@@ -10,14 +16,6 @@ export default function List({ items }: { items: GroceryItem[] }): JSX.Element {
     }
     return classNames.join(' ')
   }
-
-  const [updateGroceryItem] = useMutation(
-    UPDATE, {
-    refetchQueries: [
-      { query: GET },
-    ]
-  })
-
 
   return (
     <fieldset className="space-y-5">
