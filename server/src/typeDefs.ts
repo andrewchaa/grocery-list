@@ -10,6 +10,7 @@ const typeDefs = `#graphql
 
   type Mutation {
     addGroceryItem(name: String!): GroceryItem
+    updateGroceryItem(name: String!, done: Boolean!): GroceryItem
   }
 `
 

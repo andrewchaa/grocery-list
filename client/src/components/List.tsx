@@ -1,13 +1,8 @@
+import { useMutation } from "@apollo/client";
+import { GET, UPDATE } from "../gqls";
 import { GroceryItem } from "../types";
 
-export default function List({
-  items,
-  toggle
-}: {
-  items: GroceryItem[],
-  toggle: (name: string) => void
-}): JSX.Element {
-
+export default function List({ items }: { items: GroceryItem[] }): JSX.Element {
   const itemClassNames = (item: GroceryItem) => {
     const classNames = ['block', 'text-sm', 'font-medium']
     if (item.done) {
@@ -15,6 +10,14 @@ export default function List({
     }
     return classNames.join(' ')
   }
+
+  const [updateGroceryItem] = useMutation(
+    UPDATE, {
+    refetchQueries: [
+      { query: GET },
+    ]
+  })
+
 
   return (
     <fieldset className="space-y-5">
@@ -28,7 +31,9 @@ export default function List({
               type="checkbox"
               className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
               checked={item.done}
-              onChange={() => toggle(item.name)}
+              onChange={() => {
+                updateGroceryItem({ variables: { name: item.name, done: !item.done } })
+              }}
             />
           </div>
           <div className="ml-3 text-sm">

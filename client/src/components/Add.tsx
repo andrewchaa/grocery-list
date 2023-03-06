@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useMutation } from "@apollo/client"
 import { GroceryItem } from "../types"
 import { ExclamationCircleIcon } from '@heroicons/react/20/solid'
-import { ADD, GET_GROCERYITEMS } from "../gqls"
+import { ADD, GET } from "../gqls"
 
 export default function Add(): JSX.Element {
 
@@ -11,7 +11,7 @@ export default function Add(): JSX.Element {
   const [addGroceryItem, { loading, error }] = useMutation(
     ADD, {
     refetchQueries: [
-      { query: GET_GROCERYITEMS },
+      { query: GET },
     ]
   })
 
