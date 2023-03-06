@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useQuery, useMutation, gql } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import Add from './components/Add';
 import List from './components/List';
 import { items as groceryList } from './data';
@@ -8,18 +8,6 @@ import { GET_GROCERYITEMS } from './gqls';
 
 function App() {
   const [items, setItems] = useState<GroceryItem[]>(groceryList);
-  const addToItems = (item: GroceryItem) => {
-    setItems([...items, item])
-  }
-
-  const ADD_GROCERYITEM = gql`
-    mutation AddItem($name: String!) {
-      addGroceryItem(name: $name) {
-        name
-      }
-    }
-  `
-
 
   const toggle = (name: string) => {
     const newItems = items.map(item => {
@@ -44,7 +32,7 @@ function App() {
       <div className="App">
         <div><List items={data.groceryItems} toggle={toggle} /></div>
         <div className="pt-10">
-          <Add addToItems={addToItems} />
+          <Add />
         </div>
       </div>
     </div>
