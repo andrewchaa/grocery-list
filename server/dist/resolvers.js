@@ -10,7 +10,7 @@ const resolvers = {
             return newItem;
         },
         updateGroceryItem: (_, { name, done }) => {
-            const item = groceryItems.find((item) => item.name === name);
+            const item = groceryItems.find(x => x.name === name);
             if (item) {
                 item.done = done;
             }
