@@ -8,7 +8,7 @@ describe('Add', () => {
   const user = userEvent.setup()
   const item = 'Milk'
 
-  const responseData = {
+  const addResponse = {
     addGroceryItem: {
       name: item,
       done: false
@@ -22,7 +22,7 @@ describe('Add', () => {
           query: ADD,
           variables: { name: item }
         },
-        result: { data: responseData },
+        result: { data: addResponse },
       }
     ]
 
@@ -37,7 +37,7 @@ describe('Add', () => {
 
   it('calls addGroceryItem mutation when the button is clicked', async () => {
     const newDataMock = jest.fn()
-    newDataMock.mockReturnValue({ data: responseData })
+    newDataMock.mockReturnValue({ data: addResponse })
 
     const mocks = [
       {
@@ -66,7 +66,7 @@ describe('Add', () => {
           query: ADD,
           variables: { name: item }
         },
-        result: { data: responseData },
+        result: { data: addResponse },
       }
     ]
 
@@ -84,7 +84,7 @@ describe('Add', () => {
 
   it('does not call mutation when the button is clicked but the item is empty', async () => {
     const newDataMock = jest.fn()
-    newDataMock.mockReturnValue({ data: responseData })
+    newDataMock.mockReturnValue({ data: addResponse })
 
     const mocks = [
       {
@@ -108,7 +108,7 @@ describe('Add', () => {
 
   it('displays an error message when the item is empty', async () => {
     const newDataMock = jest.fn()
-    newDataMock.mockReturnValue({ data: responseData })
+    newDataMock.mockReturnValue({ data: addResponse })
 
     const mocks = [
       {

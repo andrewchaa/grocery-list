@@ -1,5 +1,5 @@
 import { MockedProvider } from '@apollo/client/testing'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import List from '../components/List'
 import { GET, UPDATE } from '../gqls'
 
@@ -35,10 +35,10 @@ describe('List', () => {
   })
 
   it('calls toggle when an item is clicked', async () => {
-    const newDataMock = jest.fn()
-    newDataMock.mockReturnValue({
+    const updateMock = jest.fn()
+    updateMock.mockReturnValue({
       "updateGroceryItem": {
-        "name": "Milk",
+        "name": milk,
         "done": true
       }
     })
@@ -53,7 +53,7 @@ describe('List', () => {
         query: UPDATE,
         variables: { name: milk, done: true },
       },
-      newData: newDataMock,
+      newData: updateMock,
     }]
 
     render(
@@ -64,6 +64,6 @@ describe('List', () => {
 
     screen.getByRole('checkbox', { name: milk }).click()
 
-    expect(newDataMock).toHaveBeenCalledWith()
+    expect(updateMock).toHaveBeenCalledWith()
   })
 })

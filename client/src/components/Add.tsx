@@ -8,7 +8,7 @@ export default function Add(): JSX.Element {
 
   const [item, setItem] = useState<GroceryItem>({ name: '', done: false })
   const [errorMessage, setErrorMessage] = useState<string>('')
-  const [addGroceryItem, { data, loading, error }] = useMutation(
+  const [addGroceryItem, { loading, error }] = useMutation(
     ADD, {
     refetchQueries: [
       { query: GET },
